@@ -13,15 +13,20 @@
             <div class="col-xs-12">
                 <a class="btn btn-default" onclick="start()">Start cons</a>
                 <a class="btn btn-info" onclick="toTxt()">To TXT</a>
-                <g:link class="list" action="exportLogToTxt">Document List</g:link>
+                %{--<g:link class="list" action="exportLogToTxt">Document List</g:link>--}%
             </div>
 
             <div class="col-xs-12">
-                <p>
-                    <span style="font-weight: 900;">Log message : </span>
-                    <span class="msg" id="msg">
-                    </span>
-                </p>
+                <table class="table table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="max-width:.5rem;">Id</th>
+                            <th scope="col">Log messages : </th>
+                        </tr>
+                    </thead>
+                    <tbody class="msg" id="msg">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -14,7 +14,6 @@ class KafkaConnectController {
      * Render index page
      */
     def index() {
-        [messages:KafkaConnect.list()]
     }
 
     def retrieveLogMessages() {
