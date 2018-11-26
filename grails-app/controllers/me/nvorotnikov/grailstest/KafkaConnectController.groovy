@@ -24,13 +24,32 @@ class KafkaConnectController {
      * Export log to TXT file
      */
     def exportLogToTxt() {
-        File file = new File("/home/niko/Downloads/LogFile.txt")
+        File file = null
+        try {
+            file = new File("/home/niko/Downloads/LogFile.txt")
 
-        def lst = KafkaConnect.list().logMessage
-        lst.each {
-            file << "${it}\n"
+            def lst = KafkaConnect.list().logMessage
+            lst.each {
+                file << "${it}\n"
+            }
+            flash.success = "Log successfully saved in '/home/niko/Downloads/LogFile.txt'"
+        } catch (IOException e) {
+            flash.error = "Ooops, something going wrong ! \n ${e}"
         }
+        redirect(action: "index")
     }
+
+    /**
+     * Adding lines to TXT file
+     */
+    def addLineToTxt(String line) {
+        File file = new File("/home/niko/Downloads/LogFile2.txt")
+
+        file << "${line}\n"
+        flash.success = "Line added in LogFile2.txt"
+
+    }
+
 
     /**
      * Set Kafka Consumer Properties
@@ -67,6 +86,7 @@ class KafkaConnectController {
                     String v = record.value().toString()
                     println v
                     kafkaConnectService.create(v)
+                    addLineToTxt(v)
             }
             consumer.commitAsync()
         }

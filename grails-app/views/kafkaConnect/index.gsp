@@ -10,11 +10,34 @@
 <div class="container">
         <h1>Kafka Consumer</h1>
         <div class="row">
+            <nav class="navbar ">
+                <div class="container-fluid">
+                    <g:link class="btn btn-default" action="runConsumer">Start cons</g:link>
+                    <g:link class="btn btn-info" action="exportLogToTxt">To TXT</g:link>
+                </div>
+            </nav>
+
             <div class="col-xs-12">
-                <a class="btn btn-default" onclick="start()">Start cons</a>
-                <a class="btn btn-info" onclick="toTxt()">To TXT</a>
-                %{--<g:link class="list" action="exportLogToTxt">Document List</g:link>--}%
+                <div class="alerts">
+                    <g:if test="${flash.success}">
+                        <div class="alert alert-success alert-dismissible show" role="alert">
+                            ${flash.success}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </g:if>
+                    <g:if test="${flash.error}">
+                        <div class="alert alert-error alert-dismissible show" role="alert">
+                            <strong>Holy guacamole!</strong> ${flash.error}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </g:if>
+                </div>
             </div>
+
 
             <div class="col-xs-12">
                 <table class="table table-striped table-hover">
@@ -32,21 +55,13 @@
     </div>
 
     <script>
-        function start() {
-            <g:remoteFunction action="runConsumer"/>
-        }
-
-        function toTxt() {
-            <g:remoteFunction action="exportLogToTxt"/>
-        }
-
         function retrieveLogMessages() {
             <g:remoteFunction action="retrieveLogMessages" update="msg"/>
         }
 
         function pollMessages() {
             retrieveLogMessages();
-            setTimeout('pollMessages()', 500);
+            setTimeout('pollMessages()', 2000);
         }
         pollMessages();
     </script>
