@@ -10,8 +10,10 @@ class KafkaConnectController {
 
     def kafkaConnectService
 
+    /**
+     * Render index page
+     */
     def index() {
-        exportLogToTxt()
         [messages:KafkaConnect.list()]
     }
 
@@ -19,6 +21,9 @@ class KafkaConnectController {
         [messages:KafkaConnect.list()]
     }
 
+    /**
+     * Export log to TXT file
+     */
     def exportLogToTxt() {
         File file = new File("/home/niko/Downloads/LogFile.txt")
 
@@ -28,6 +33,10 @@ class KafkaConnectController {
         }
     }
 
+    /**
+     * Set Kafka Consumer Properties
+     * @return java.util.Properties.
+     */
     def setProperties() {
         Properties props = new Properties()
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
@@ -39,6 +48,9 @@ class KafkaConnectController {
         return props
     }
 
+    /**
+     * Start Consuming data from kafka topic
+     */
     def runConsumer() {
 
         Properties props = setProperties()
@@ -62,13 +74,5 @@ class KafkaConnectController {
         consumer.close()
         println("DONE")
     }
-
-//    def stopConsumer() {
-//        if(consumer != null)
-//            println("nnot null")
-//
-//        consumer.close()
-//        println("CLOSE")
-//    }
 
 }

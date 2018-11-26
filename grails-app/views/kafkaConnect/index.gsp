@@ -13,8 +13,7 @@
             <div class="col-xs-12">
                 <a class="btn btn-default" onclick="start()">Start cons</a>
                 <a class="btn btn-info" onclick="toTxt()">To TXT</a>
-                %{--<g:link class="list" action="exportLogToTxt">Document List</g:link>--}%
-                %{--<a class="btn btn-danger" onclick="stop()">Stop cons</a>--}%
+                <g:link class="list" action="exportLogToTxt">Document List</g:link>
             </div>
 
             <div class="col-xs-12">
@@ -35,10 +34,6 @@
         function toTxt() {
             <g:remoteFunction action="exportLogToTxt"/>
         }
-
-        %{--function stop() {--}%
-            %{--<g:remoteFunction action="stopConsumer"/>--}%
-        %{--}--}%
 
         function retrieveLogMessages() {
             <g:remoteFunction action="retrieveLogMessages" update="msg"/>
