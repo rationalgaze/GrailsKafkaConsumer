@@ -11,20 +11,16 @@
         <h1>Kafka Consumer</h1>
         <div class="row">
             <div class="col-xs-12">
-                <a class="btn btn-default" href="<g:createLink action="runConsumer" />">Start cons</a>
-                <a class="btn btn-default" href="<g:createLink action="retrieveLogMessages" />">Get list</a>
-                <a class="btn btn-default" href="<g:createLink action="write" />">write</a>
+                <a class="btn btn-default" onclick="start()">Start cons</a>
+                <a class="btn btn-info" onclick="toTxt()">To TXT</a>
+                %{--<g:link class="list" action="exportLogToTxt">Document List</g:link>--}%
+                %{--<a class="btn btn-danger" onclick="stop()">Stop cons</a>--}%
             </div>
 
             <div class="col-xs-12">
                 <p>
                     <span style="font-weight: 900;">Log message : </span>
-                    <span class="msg">
-                        <g:each in="${messages}" var="msg">
-                            <div>
-                                <span class="mess">${msg.logMessage}</span>
-                            </div>
-                        </g:each>
+                    <span class="msg" id="msg">
                     </span>
                 </p>
             </div>
@@ -32,19 +28,27 @@
     </div>
 
     <script>
-        %{--function run() {--}%
-            %{--console.log("run");--}%
-            %{--<g:remoteFunction action="runConsumer" />--}%
+        function start() {
+            <g:remoteFunction action="runConsumer"/>
+        }
+
+        function toTxt() {
+            <g:remoteFunction action="exportLogToTxt"/>
+        }
+
+        %{--function stop() {--}%
+            %{--<g:remoteFunction action="stopConsumer"/>--}%
         %{--}--}%
 
-        %{--function retrieveLogMessages() {--}%
-            %{--console.log("msg");--}%
-            %{--<g:remoteFunction action="retrieveLogMessages" update="msg"/>--}%
-        %{--}--}%
+        function retrieveLogMessages() {
+            <g:remoteFunction action="retrieveLogMessages" update="msg"/>
+        }
 
-        %{--function stop () {--}%
-            %{--<g:remoteFunction action="write" />--}%
-        %{--}--}%
+        function pollMessages() {
+            retrieveLogMessages();
+            setTimeout('pollMessages()', 500);
+        }
+        pollMessages();
     </script>
 </body>
 </html>

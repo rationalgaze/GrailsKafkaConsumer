@@ -20,11 +20,29 @@ environments {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
         }
+
+        dataSource_mysql {
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+//            dialect = org.hibernate.dialect.MariaDBDialect
+            driverClassName = 'com.mysql.jdbc.Driver'
+            username = "niko"
+            password = "1234"
+            url = 'jdbc:mysql://localhost:3306/kafka'
+            dbCreate = 'update'
+        }
     }
     test {
         dataSource {
             dbCreate = "update"
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+        }
+
+        dataSource_mysql {
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            username = "niko"
+            password = "1234"
+            url = 'jdbc:mysql://localhost/kafka'
+            dbCreate = 'update'
         }
     }
     production {
@@ -51,6 +69,15 @@ environments {
                jdbcInterceptors = "ConnectionState"
                defaultTransactionIsolation = java.sql.Connection.TRANSACTION_READ_COMMITTED
             }
+        }
+
+        dataSource_mysql {
+            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+            driverClassName = 'com.mysql.jdbc.Driver'
+            username = "niko"
+            password = "1234"
+            url = 'jdbc:mysql://localhost/kafka'
+            dbCreate = 'update'
         }
     }
 }

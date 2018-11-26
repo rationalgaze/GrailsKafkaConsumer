@@ -11,13 +11,24 @@ class KafkaConnectController {
     def kafkaConnectService
 
     def index() {
+        exportLogToTxt()
+        [messages:KafkaConnect.list()]
     }
 
     def retrieveLogMessages() {
-        render (view: "retrieveLogMessages", model: [messages:KafkaConnect.listOrderByLogMessage()])
+        [messages:KafkaConnect.list()]
     }
 
-    def runConsumer() {
+    def exportLogToTxt() {
+        File file = new File("/home/niko/Downloads/LogFile.txt")
+
+        def lst = KafkaConnect.list().logMessage
+        lst.each {
+            file << "${it}\n"
+        }
+    }
+
+    def setProperties() {
         Properties props = new Properties()
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "KafkaExampleConsumer")
@@ -25,8 +36,14 @@ class KafkaConnectController {
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000")
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName())
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName())
+        return props
+    }
 
-        // Create the consumer using props.
+    def runConsumer() {
+
+        Properties props = setProperties()
+
+        // Create the consumer using properties.
         Consumer<String, String> consumer = new KafkaConsumer<>(props)
         consumer.subscribe(["connect-test"])
 
@@ -36,7 +53,6 @@ class KafkaConnectController {
 
             consumerRecords.each{
                 record ->
-                    String k = record.key().toString()
                     String v = record.value().toString()
                     println v
                     kafkaConnectService.create(v)
@@ -47,7 +63,12 @@ class KafkaConnectController {
         println("DONE")
     }
 
-    def write() {
-        render (view: "retrieveLogMessages", model: [messages: kafkaConnectService.listKafkaConnect()])
-    }
+//    def stopConsumer() {
+//        if(consumer != null)
+//            println("nnot null")
+//
+//        consumer.close()
+//        println("CLOSE")
+//    }
+
 }

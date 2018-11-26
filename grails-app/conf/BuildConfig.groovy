@@ -51,6 +51,8 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
 
+        runtime 'mysql:mysql-connector-java:5.1.44'
+
         compile "org.springframework:spring-orm:$springVersion"
         compile "org.apache.kafka:kafka-clients:0.11.0.0"
         compile "org.apache.kafka:kafka_2.11:0.11.0.0"

@@ -10,8 +10,4 @@ class KafkaConnectService {
         return new KafkaConnect(logMessage: m).save()
     }
 
-    @Transactional(readOnly = true)
-    def listKafkaConnect(){
-        KafkaConnect.list()
-    }
 }
