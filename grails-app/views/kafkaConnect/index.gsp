@@ -10,12 +10,12 @@
 <div class="container">
         <h1>Kafka Consumer</h1>
         <div class="row">
-            <nav class="navbar ">
-                <div class="container-fluid">
-                    <g:link class="btn btn-default" action="runConsumer">Start cons</g:link>
-                    <g:link class="btn btn-info" action="exportLogToTxt">To TXT</g:link>
-                </div>
-            </nav>
+                <nav class="navbar ">
+                    <div class="container-fluid">
+                        <a class="btn btn-default" onclick="start()">Start cons</a>
+                        <g:link class="btn btn-info" action="exportLogToTxt">To TXT</g:link>
+                    </div>
+                </nav>
 
             <div class="col-xs-12">
                 <div class="alerts">
@@ -55,6 +55,10 @@
     </div>
 
     <script>
+        function start() {
+            <g:remoteFunction action="runConsumer"/>
+        }
+
         function retrieveLogMessages() {
             <g:remoteFunction action="retrieveLogMessages" update="msg"/>
         }
